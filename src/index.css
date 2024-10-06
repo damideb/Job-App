@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "opensans";
+  src: url("./assets//fonts//Open_Sans/static/OpenSans-Bold.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "monaSans";
+  src: url("/src/assets/fonts/mona-sans/Mona-Sans-Bold.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "CircularStd";
+  src: url("/src/assets/fonts/circular-std/CircularStd-Book.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+body {
+  background-color: #f1faee;
+}
+
+.getstarted-button,
+.login-button {
+  position: relative;
+}
+.getstarted-button::after {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  content: "";
+  height: 100%;
+  background-color: #1d3557;
+  transition: transform 0.7s ease;
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.getstarted-button:hover {
+  color: white;
+}
+
+.getstarted-button:hover::after {
+  transform: scaleX(1);
+}
+
+.login-button::after {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  color: white;
+  content: "Login";
+  height: 100%;
+  background-color: #1d3557;
+  transition: transform 0.7s ease;
+  transform-origin: right;
+  transform: scaleX(1);
+}
+
+.login-button:hover::after {
+  transform: scaleX(0);
+  color: transparent;
+}
+
+.login-button {
+  transition: transform 1s ease;
+  transform-origin: left;
+}
+
+.input-container {
+  position: relative;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.input-container > input {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+  background-color: #f1faee;
+}
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #aaa;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+input:focus ~ .floating-label,
+input:not(:placeholder-shown) ~ .floating-label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  background-color: #f1faee; /* Background color for label */
+  padding: 0 5px;
+  color: #007bff;
+  transform: translateY(0);
+}
+
+.input-container> input:focus,
+.input-container> input:not(:placeholder-shown) {
+  border: 2px solid #1d3557;
+}
+
