@@ -1,16 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 
 export default function Sidebar() {
-
   const location = useLocation();
   const pathname = location.pathname;
 
-
-    const sideContent = [
-      { title: "Add Jobs", Link: "/dashboard" },
-      { title: "Get Jobs", Link: "/dashboard/all-jobs" },
-      { title: "profile", Link: "/dashboard/profile" },
-    ];
+  const sideContent = [
+    { title: "Add Jobs", Link: "/dashboard" },
+    { title: "Get Jobs", Link: "/dashboard/all-jobs" },
+    { title: "profile", Link: "/dashboard/profile" },
+  ];
   return (
     <div className=" w-[300px] ">
       <div className=" fixed  text-black w-[250px] top-0 h-screen bg-white">

@@ -1,18 +1,17 @@
 import { jobDetails } from "../types/types";
+
 type Props = {
   title: string;
   handleInputChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   jobDetails: jobDetails;
-  handleFormSubmit: ()=>void
+  handleFormSubmit: () => void;
+  Loading: boolean
 };
-export default function JobForm({
-  title,
-  handleInputChange,
-  jobDetails,
-  handleFormSubmit,
-}: Props) {
+export default function JobForm({title,handleInputChange,jobDetails,handleFormSubmit,Loading}: Props){
+
+console.log(jobDetails);
   return (
     <div className=" bg-white w-[90%] mx-auto   rounded-lg h-fit p-10">
       <h2 className=" text-4xl text-center py-5 font-openSans">{title}</h2>
@@ -29,7 +28,7 @@ export default function JobForm({
             name="position"
             required
             onChange={handleInputChange}
-            value={jobDetails.position}
+            value={jobDetails?.position}
             className=" w-full bg-primary px-10 py-2 rounded outline-none border"
           />
         </div>
@@ -44,7 +43,7 @@ export default function JobForm({
             id="company"
             name="company"
             onChange={handleInputChange}
-            value={jobDetails.company}
+            value={jobDetails?.company}
             required
           />
         </div>
@@ -59,7 +58,7 @@ export default function JobForm({
             id="location"
             name="jobLocation"
             onChange={handleInputChange}
-            value={jobDetails.jobLocation}
+            value={jobDetails?.jobLocation}
             required
           />
         </div>
@@ -75,7 +74,7 @@ export default function JobForm({
             id="jobStatus"
             name="status"
             onChange={handleInputChange}
-            value={jobDetails.status}
+            value={jobDetails?.status}
             className="w-full bg-primary px-2 py-2 rounded outline-none border"
           >
             <option value="Pending">Pending</option>
@@ -92,7 +91,7 @@ export default function JobForm({
             id="jobType"
             name="jobType"
             onChange={handleInputChange}
-            value={jobDetails.jobType}
+            value={jobDetails?.jobType}
             className="w-full bg-primary px-2 py-2 rounded outline-none border"
           >
             <option value="">Select Job Type</option>
@@ -102,8 +101,12 @@ export default function JobForm({
           </select>
         </div>
       </section>
-      <button onClick={handleFormSubmit} className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-[70%] mx-auto mt-7 ">
-        Submit
+      <button
+       disabled={Loading}
+        onClick={handleFormSubmit}
+        className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-[70%] mx-auto mt-7 "
+      >
+        {Loading? "Submitting": "Submit"}
       </button>
     </div>
   );

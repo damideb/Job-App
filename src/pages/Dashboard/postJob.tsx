@@ -2,29 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import JobForm from "../../components/jobForm";
 import { AuthBase } from "../../api/authBase";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { jobDetails } from "../../types/types";
 
-// type jobDetails = {
-//   position: string;
-//   company: string;
-//   jobLocation: string;
-//   createdAt: string;
-//   jobType: string;
-//   status: string;
-//   _id: string;
-// };
 export default function PostJob() {
-  const [jobDetails, setJobDetails] = useState([
-    {
-      position: "",
-      company: "",
-      jobLocation: "",
-      createdAt: "",
-      jobType: "",
-      status: "",
-      _id: "",
-    },
-  ]);
+  const [jobDetails, setJobDetails] = useState<jobDetails>({
+    position: "",
+    company: "",
+    jobLocation: "",
+    jobType: "",
+    status: "",
+  });
+  const [Loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const createJobs = async () => {
@@ -32,11 +21,13 @@ export default function PostJob() {
       const response = await AuthBase.post("/jobs", jobDetails);
 
       if (response.status === 201) {
-        toast.success("Job posted successfully!")
+        toast.success("Job posted successfully!");
         navigate("/dashboard/all-jobs");
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,6 +73,7 @@ export default function PostJob() {
       handleInputChange={handleInputChange}
       jobDetails={jobDetails}
       handleFormSubmit={createJobs}
+      Loading={Loading}
     />
   );
 }

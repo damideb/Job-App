@@ -5,11 +5,9 @@ export type jobDetails = {
   company: string;
   jobLocation: string;
   jobType: string;
-  createdAt: string;
-  status: string;
-  _id: string;
 
-  
+  status: string;
+
 };
 
  

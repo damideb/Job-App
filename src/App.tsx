@@ -46,7 +46,7 @@ const Router = createBrowserRouter([
             element: <Profile />,
           },
           {
-            path: "/dashboard/edit",
+            path: "/dashboard/edit/:id",
             element: <EditJob />,
           },
         ],

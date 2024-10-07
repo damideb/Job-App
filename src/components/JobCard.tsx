@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router";
 type job = {
   position: string;
   company: string;
@@ -14,6 +14,7 @@ type Props ={
   handleDelete: (id:string) => Promise<void>,
 }
 export default function JobCard({job, handleDelete}:Props) {
+  const navigate = useNavigate();
 
   const deleteJob = async()=>{
 
@@ -51,8 +52,18 @@ export default function JobCard({job, handleDelete}:Props) {
         </h3>
       </div>
       <div className=" flex gap-2">
-        <button className="bg-blue py-1 px-3 text-white rounded">Edit</button>
-        <button className="bg-blue py-1 px-3 text-white rounded" onClick={deleteJob}>Delete</button>
+        <button
+          className="bg-blue py-1 px-3 text-white rounded"
+          onClick={() => navigate(`/dashboard/edit/${job?._id}`)}
+        >
+          Edit
+        </button>
+        <button
+          className="bg-blue py-1 px-3 text-white rounded"
+          onClick={deleteJob}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

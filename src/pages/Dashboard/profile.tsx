@@ -4,7 +4,7 @@ import { AuthContextProvider } from "../../types/types";
 import { AuthBase } from "../../api/authBase";
 import { toast } from "react-toastify";
 export default function Profile() {
-  const { state } = useContext(AuthContext) as AuthContextProvider;
+  const { state, dispatch } = useContext(AuthContext) as AuthContextProvider;
 
   const [profile, setProfile] = useState({
 name: state?.user?.name,
@@ -24,9 +24,13 @@ name: state?.user?.name,
       setUpdating(true);
       const response = await AuthBase.patch("/user/update", profile);
       const data = response.data;
-      console.log(data)
+      // console.log(data)
       if (response.status === 200) {
         toast.success("Profile updated successfully!");
+        dispatch({
+          type: "GetCurrentUser",
+          payload: { user: data.user },
+        });
       }
     } catch (error) {
       console.error(error);

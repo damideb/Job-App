@@ -27,7 +27,7 @@ const ContextProvider: React.FC<{ children: React.ReactNode }> = ({children}) =>
       case 'GetCurrentUser':
         return{
           ...state,
-          loading: true,
+          loading: false,
           user: action.payload?.user || null,
         }
       default:
