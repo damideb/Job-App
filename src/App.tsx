@@ -10,44 +10,50 @@ import EditJob from "./pages/Dashboard/EditJob";
 import AuthLayout from "./components/AuthLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Error from "./pages/error";
 
 
 
 const Router = createBrowserRouter([
   {
-    path: "/",
-    element: <Homepage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/register",
-    element: <Register />,
-  },
-
-  {
-    element: <AuthLayout />, // Protects dashboard routes
+    errorElement: <Error />,
     children: [
       {
-        element: <DashboardLayout />, // Actual dashboard layout
+        path: "/",
+        element: <Homepage />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+
+      {
+        element: <AuthLayout />, // Protects dashboard routes
         children: [
           {
-            path: "/dashboard",
-            element: <PostJob />,
-          },
-          {
-            path: "/dashboard/all-jobs",
-            element: <GetJob />,
-          },
-          {
-            path: "/dashboard/profile",
-            element: <Profile />,
-          },
-          {
-            path: "/dashboard/edit/:id",
-            element: <EditJob />,
+            element: <DashboardLayout />, // Actual dashboard layout
+            children: [
+              {
+                path: "/dashboard",
+                element: <PostJob />,
+              },
+              {
+                path: "/dashboard/all-jobs",
+                element: <GetJob />,
+              },
+              {
+                path: "/dashboard/profile",
+                element: <Profile />,
+              },
+              {
+                path: "/dashboard/edit/:id",
+                element: <EditJob />,
+              },
+            ],
           },
         ],
       },
@@ -59,7 +65,7 @@ function App() {
     <>
       <RouterProvider router={Router} />
       <ToastContainer
-        autoClose={3000}
+        autoClose={2000}
         draggable={false}
         position="top-right"
         hideProgressBar={false}

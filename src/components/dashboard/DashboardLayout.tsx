@@ -7,6 +7,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../authContext/context";
 import { AuthContextProvider } from "../../types/types";
 import Loader from "../loader";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export default function DashboardLayout() {
   const { dispatch, loading, setLoading } = useContext(
@@ -25,7 +27,11 @@ export default function DashboardLayout() {
           });
         }
         console.log(data.data.user);
-      } catch (error) {
+      } catch (err ) {
+         const error = err as AxiosError;
+        if (!error.response) { // the error object does not contain a response when there is a network failure
+          toast.error("Network Error: Please check your internet connection and refresh.");
+        } 
         console.error(error);
       } finally {
         setLoading(false);

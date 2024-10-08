@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import illustation from "../assets/illustration.svg";
 import { useNavigate } from "react-router";
 
@@ -5,12 +6,19 @@ function Homepage() {
   const navigate = useNavigate();
   return (
     <>
-      <h1 className=" px-14 text-3xl font-openSans text-[#1D3557] py-10">
-        <span className=" font-openSans bg-blue px-5  py-3 mx-2 rounded text-white font-bold w-fit text-2xl">
-        JQ
-        </span>{" "}
-        JobQuest
-      </h1>
+      <div className="flex justify-between items-center px-14 ">
+        <h1 className=" text-3xl font-openSans text-[#1D3557] py-10">
+          <span className=" font-openSans bg-blue px-5  py-3 mx-2 rounded text-white font-bold w-fit text-2xl">
+            JQ
+          </span>{" "}
+          JobQuest
+        </h1>
+        <Link to='/dashboard'>
+          <button className=" bg-blue h-fit py-3 rounded text-xl shadow-md px-6 drop-shadow-md font-semibold text-white">
+            Dashboard
+          </button>
+        </Link>
+      </div>
 
       <main className=" flex text-[#333333] justify-between py-[8em] px-14">
         <div className=" w-[65%]">

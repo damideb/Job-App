@@ -7,7 +7,7 @@ export default function Sidebar() {
   const sideContent = [
     { title: "Add Jobs", Link: "/dashboard" },
     { title: "Get Jobs", Link: "/dashboard/all-jobs" },
-    { title: "profile", Link: "/dashboard/profile" },
+    { title: "Profile", Link: "/dashboard/profile" },
   ];
   return (
     <div className=" w-[300px] ">
@@ -16,15 +16,15 @@ export default function Sidebar() {
           <Link to="/">JobQuest</Link>
         </h1>
 
-        <div className="  space-y-20 font-circular text-blue my-20">
+        <div className="   font-medium   text-blue my-20">
           {sideContent.map((item, index) => (
             <div
               key={index}
               className={`${
                 pathname === item.Link
-                  ? " bg-primary p-3 text-blue border-l-4 border-blue"
+                  ? " bg-primary text-blue border-l-4 border-blue"
                   : ""
-              } transition-all duration-500`}
+              } transition-all border-b-2 py-10 border-b-[#ECEEF1] duration-500`}
             >
               <Link
                 to={item.Link}

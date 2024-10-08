@@ -3,6 +3,7 @@ import image from "../assets/auth.png";
 import { useState } from "react";
 import { AuthBase } from "../api/authBase";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 
 
@@ -38,8 +39,14 @@ export default function Register() {
       
     console.log(data);
     }
-    catch(error){
-      console.error(error);
+    catch(err){
+       const error = err as AxiosError;
+       if (!error.response) {
+         toast.error(
+           "Network Error: Please check your internet connection and refresh."
+         );
+       } 
+       toast.error('Registeration failed. Try again')
     }
     finally{
       setIsLoggedIn(false);

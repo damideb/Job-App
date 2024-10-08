@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../authContext/context";
 import { AuthContextProvider } from "../types/types";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 export default function Login() {
   const { dispatch } = useContext(AuthContext) as AuthContextProvider;
@@ -38,8 +39,14 @@ export default function Login() {
       localStorage.setItem("token", token);
       }
       // console.log(token);
-    } catch(error) {
-      toast.error(error?.response?.data.msg);
+    } catch(err) {
+       const error = err as AxiosError;
+       if (!error.response) {
+         toast.error(
+           "Network Error: Please check your internet connection and refresh."
+         );
+       } 
+      toast.error('Login Failed. Try again');
       console.log(error);
     } finally {
       setIsLoggedIn(false);

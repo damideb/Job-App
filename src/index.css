@@ -124,3 +124,14 @@ input:not(:placeholder-shown) ~ .floating-label {
   border: 2px solid #1d3557;
 }
 
+.Accepted{
+  background-color: #f1faee;
+  color:rgba(35, 144, 35, 0.986);
+
+}
+
+.Rejected{
+  background-color: red !important;
+  color: white;
+}
+

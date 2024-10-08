@@ -5,22 +5,19 @@ export type jobDetails = {
   company: string;
   jobLocation: string;
   jobType: string;
-
   status: string;
-
 };
 
- 
-  type user = {
-    name: string;
-    email: string;
-    location: string;
-  };
+type user = {
+  name: string;
+  email: string;
+  location: string;
+};
 
- export interface AuthState {
+export interface AuthState {
   isLoggedIn: boolean;
   loading: boolean;
-  user: user |null;
+  user: user | null;
 }
 
 export interface AuthAction {

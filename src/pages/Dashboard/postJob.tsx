@@ -4,6 +4,8 @@ import JobForm from "../../components/jobForm";
 import { AuthBase } from "../../api/authBase";
 import { toast } from "react-toastify";
 import { jobDetails } from "../../types/types";
+import { AxiosError } from "axios";
+// import axios from "axios";
 
 export default function PostJob() {
   const [jobDetails, setJobDetails] = useState<jobDetails>({
@@ -17,6 +19,7 @@ export default function PostJob() {
 
   const navigate = useNavigate();
   const createJobs = async () => {
+    setLoading(true)
     try {
       const response = await AuthBase.post("/jobs", jobDetails);
 
@@ -25,6 +28,15 @@ export default function PostJob() {
         navigate("/dashboard/all-jobs");
       }
     } catch (err) {
+      const error = err as AxiosError;
+      if (!error.response) {
+        toast.error(
+          "Network Error: Please check your internet connection and refresh."
+        );
+      } 
+      else{
+        toast.error('Unable to create job. Please try again')
+      }
       console.log(err);
     } finally {
       setLoading(false);
@@ -41,6 +53,10 @@ export default function PostJob() {
       [name]: value,
     }));
   };
+  
+  
+
+
 
   // useEffect(()=>{
   // const url = "https://api.apijobs.dev/v1/job/search";

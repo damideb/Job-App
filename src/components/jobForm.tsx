@@ -11,7 +11,6 @@ type Props = {
 };
 export default function JobForm({title,handleInputChange,jobDetails,handleFormSubmit,Loading}: Props){
 
-console.log(jobDetails);
   return (
     <div className=" bg-white w-[90%] mx-auto   rounded-lg h-fit p-10">
       <h2 className=" text-4xl text-center py-5 font-openSans">{title}</h2>
@@ -29,7 +28,7 @@ console.log(jobDetails);
             required
             onChange={handleInputChange}
             value={jobDetails?.position}
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
           />
         </div>
 
@@ -38,7 +37,7 @@ console.log(jobDetails);
             Company Name
           </label>
           <input
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
             type="text"
             id="company"
             name="company"
@@ -53,7 +52,7 @@ console.log(jobDetails);
             Job Location
           </label>
           <input
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
             type="text"
             id="location"
             name="jobLocation"

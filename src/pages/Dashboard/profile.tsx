@@ -3,11 +3,12 @@ import { AuthContext } from "../../authContext/context";
 import { AuthContextProvider } from "../../types/types";
 import { AuthBase } from "../../api/authBase";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 export default function Profile() {
   const { state, dispatch } = useContext(AuthContext) as AuthContextProvider;
 
   const [profile, setProfile] = useState({
-name: state?.user?.name,
+    name: state?.user?.name,
     email: state?.user?.email,
     location: state?.user?.location,
   });
@@ -32,9 +33,16 @@ name: state?.user?.name,
           payload: { user: data.user },
         });
       }
-    } catch (error) {
+    } catch (err) {
+      const error = err as AxiosError;
+      if (!error.response) {
+        toast.error(
+          "Network Error: Please check your internet connection and refresh."
+        );
+      } 
+      
+      toast.error("Failed to update profile!. Please try again");
       console.error(error);
-      toast.error("Failed to update profile!");
     } finally {
       setUpdating(false);
     }
@@ -46,10 +54,7 @@ name: state?.user?.name,
 
       <section className=" py-5 gap-y-5 grid grid-cols-2 gap-3">
         <div>
-          <label
-            htmlFor="name"
-            className="block w-full my-2 font-circular"
-          >
+          <label htmlFor="name" className="block w-full my-2 font-circular">
             Username
           </label>
           <input
@@ -59,7 +64,7 @@ name: state?.user?.name,
             value={profile.name}
             onChange={handleInputChange}
             required
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
           />
         </div>
 
@@ -81,7 +86,7 @@ name: state?.user?.name,
             Location
           </label>
           <input
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
             type="text"
             id="location"
             name="location"
@@ -96,7 +101,7 @@ name: state?.user?.name,
             Email
           </label>
           <input
-            className=" w-full bg-primary px-10 py-2 rounded outline-none border"
+            className=" w-full bg-primary px-5 py-2 rounded outline-none border"
             type="text"
             id="email"
             onChange={handleInputChange}
