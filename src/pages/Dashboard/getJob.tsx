@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import JobCard from "../../components/JobCard";
 import { AuthBase } from "../../api/authBase";
 import { useContext } from "react";
@@ -20,18 +20,44 @@ type jobDetails = {
 export default function GetJob() {
   const [jobDetails, setJobDetails] = useState<jobDetails[]>([]);
   const [loadingJobs, setLoadingJobs] = useState(true);
+  const [jobCount, setCount] = useState(0);
 
   const { setLoading } = useContext(AuthContext) as AuthContextProvider;
 
-  const getAllJobs = useCallback(async () => {
+  // const getAllJobs = useCallback(async () => {
+  //   //  setLoading(true)
+  //   try {
+  //     const response = await AuthBase.get("/jobs");
+  //     // const status = response.status;
+  //     const data = response.data.jobs;
+  //     console.log(response.data);
+    
+  //       setJobDetails(data);
+  //     setCount(response.data.count);
+  //   } catch (err) {
+  //     const error = err as AxiosError;
+  //     if (!error.response) {
+  //       toast.error(
+  //         "Network Error: Please check your internet connection and refresh."
+  //       );
+  //     }
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //     setLoadingJobs(false);
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    
+  const getAllJobs = async () => {
     //  setLoading(true)
     try {
       const response = await AuthBase.get("/jobs");
-      const status = response.status;
+      // const status = response.status;
       const data = response.data.jobs;
-      if (status === 200) {
-        setJobDetails(data);
-      }
+      setJobDetails(data);
+      setCount(response.data.count);
     } catch (err) {
       const error = err as AxiosError;
       if (!error.response) {
@@ -44,27 +70,7 @@ export default function GetJob() {
       setLoading(false);
       setLoadingJobs(false);
     }
-  }, []);
-
-  useEffect(() => {
-    // const getAllJobs = async ()=>{
-    //   //  setLoading(true)
-    //   console.log('what')
-    //   try {
-    //     const response = await AuthBase.get('/jobs')
-    //     const status = response.status
-    //     const data = response.data.jobs
-    //     console.log(status, data)
-    //     if(status ===200){
-    //       setJobDetails(data)
-    //     }
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    //   finally{
-    //     setLoading(false)
-    //   }
-    // }
+  };
 
     getAllJobs();
 
@@ -72,7 +78,7 @@ export default function GetJob() {
     //   console.log("Component Unmounted")
     //   setLoading(false)
     //}
-  }, []);
+  }, [jobDetails]);
 
   const deleteJob = async (id: string) => {
     try {
@@ -93,13 +99,13 @@ export default function GetJob() {
     }
   };
   return (
-    <main className="w-[90%] mx-auto">
+    <main className="w-[95%]  mx-auto">
       <div className=" mb-5">
-        <div className=" bg-white    rounded-lg h-fit p-10">
+        <div className=" bg-white font-DMSans    rounded-lg h-fit p-5 sm:p-10">
           <h2 className=" text-4xl text-center font-openSans">Search Job</h2>
           {/* Form for adding job */}
 
-          <section className=" py-5 gap-y-5 grid grid-cols-3 gap-3">
+          <section className=" py-5 gap-y-5 grid md:grid-cols-3 gap-3">
             <div>
               <label
                 htmlFor="Search"
@@ -152,7 +158,7 @@ export default function GetJob() {
               </select>
             </div>
           </section>
-          <button className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-[70%] mx-auto mt-7 ">
+          <button className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-full md:w-[70%] mx-auto mt-7 ">
             Submit
           </button>
         </div>
@@ -177,7 +183,7 @@ export default function GetJob() {
               </h2>
             )}
 
-            <section className=" grid grid-cols-2 gap-y-5 ">
+            <section className=" grid sm:grid-cols-1  lg:grid-cols-2 gap-y-5 ">
               {jobDetails?.map((job, i) => {
                 return (
                   <div key={i}>
@@ -186,6 +192,10 @@ export default function GetJob() {
                 );
               })}
             </section>
+            { jobCount >10 && <section className=" my-10 justify-end flex gap-5">
+              <button>Prev</button>
+              <button>Next</button>
+            </section>}
           </>
         )}
       </div>

@@ -37,6 +37,7 @@ const ContextProvider: React.FC<{ children: React.ReactNode }> = ({children}) =>
 
   const [state, dispatch] = useReducer(Reducer, initialState);
   const [loading, setLoading] = useState(true);
+      const [showMenu, setShowMenu] = useState(false);
 
   // const setLoading = useCallback((value) => {
   //   setLoadingState(value); // `setLoadingState` updates the state stored in context
@@ -44,7 +45,7 @@ const ContextProvider: React.FC<{ children: React.ReactNode }> = ({children}) =>
 
 
 return (
-  <AuthContext.Provider value={{state, dispatch, loading, setLoading}} >
+  <AuthContext.Provider value={{state, dispatch, loading, setLoading, showMenu, setShowMenu}} >
     {children}
   </AuthContext.Provider>
 )

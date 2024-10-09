@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
 export default function DashboardLayout() {
+
+
   const { dispatch, loading, setLoading } = useContext(
     AuthContext
   ) as AuthContextProvider;
@@ -26,7 +28,6 @@ export default function DashboardLayout() {
             payload: { user: data.data.user },
           });
         }
-        console.log(data.data.user);
       } catch (err ) {
          const error = err as AxiosError;
         if (!error.response) { // the error object does not contain a response when there is a network failure
@@ -52,7 +53,7 @@ export default function DashboardLayout() {
 
           <section className=" flex justify-between">
             <Sidebar />
-            <main className="w-[80%]">
+            <main className="md:w-[80%] w-full">
               <Outlet />
             </main>
           </section>

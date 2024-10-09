@@ -16,16 +16,32 @@ export default function PostJob() {
     status: "",
   });
   const [Loading, setLoading] = useState(false);
-
+ // work on job status api (pending and rejeted)
   const navigate = useNavigate();
+
   const createJobs = async () => {
-    setLoading(true)
+    const {position, company, jobLocation, jobType, status} = jobDetails
+
+    // Object.values convert the values of an object to an array
+    // some() checks if at least one element in the array passes the test implemented by the provided function.
+  
+      if (
+        Object.values({ position, company, jobLocation, jobType, status }).some(
+          (field) => !field
+        )
+      ) {
+        toast.error("All fields are required");
+        return false;
+      }
+     setLoading(true);
     try {
       const response = await AuthBase.post("/jobs", jobDetails);
-
       if (response.status === 201) {
         toast.success("Job posted successfully!");
-        navigate("/dashboard/all-jobs");
+        setTimeout(()=>{
+          navigate("/dashboard/all-jobs");
+        },2000)
+      
       }
     } catch (err) {
       const error = err as AxiosError;
@@ -73,7 +89,6 @@ export default function PostJob() {
   //       "Content-Type": "application/json",
   //     },
   //     body: JSON.stringify(data),
-  //     mode:"no-cors",
   //   })
   //     .then((response) => response.json())
   //     .then((data) => console.log(data))

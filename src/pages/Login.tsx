@@ -59,8 +59,8 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-between">
-      <div className="px-5 bg-[#a8dadc49] flex flex-col gap-5 w-[35%] justify-center">
+    <div className="flex flex-col-reverse sm:flex-row justify-between">
+      <div className="px-5 bg-[#a8dadc49] py-10 sm:py-3 flex flex-col gap-5 sm:w-[35%] justify-center">
         <h1 className="text-3xl font-openSans mb-10">Log in to your account</h1>
         <form onSubmit={login} className="space-y-10 font-circular">
           <div className={`input-container flex flex-col gap-2`}>
@@ -110,7 +110,7 @@ export default function Login() {
           </span>
         </p>
       </div>
-      <img src={image} alt="illustration" className="h-full w-[65%]" />
+      <img src={image} alt="illustration" className="sm:h-full h-[200px]  object-cover sm:w-[65%]" />
     </div>
   );
 }

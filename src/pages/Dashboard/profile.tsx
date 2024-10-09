@@ -21,6 +21,16 @@ export default function Profile() {
   };
 
   const updateProfile = async () => {
+    const { name, email, location } = profile;
+   if (
+     Object.values({ name,email, location }).some(
+       (field) => !field
+     )
+   ) {
+     toast.error("All fields are required");
+     return false;
+   }
+
     try {
       setUpdating(true);
       const response = await AuthBase.patch("/user/update", profile);
@@ -48,11 +58,11 @@ export default function Profile() {
     }
   };
   return (
-    <div className=" bg-white w-[90%] mx-auto   rounded-lg h-fit p-10">
+    <div className=" bg-white w-[90%] mx-auto   rounded-lg h-fit px-5 py-10 sm:p-5">
       <h2 className=" text-4xl text-center py-5 font-openSans">Edit Profile</h2>
       {/* Form for adding job */}
 
-      <section className=" py-5 gap-y-5 grid grid-cols-2 gap-3">
+      <section className=" font-DMSans py-5 gap-y-5 grid sm:grid-cols-2 gap-3">
         <div>
           <label htmlFor="name" className="block w-full my-2 font-circular">
             Username
@@ -113,7 +123,7 @@ export default function Profile() {
       </section>
       <button
         onClick={updateProfile}
-        className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-[70%] mx-auto mt-7 "
+        className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-full sm:w-[70%] mx-auto mt-7 "
       >
         {updating ? "Updating" : "Submit"}
       </button>

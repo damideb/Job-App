@@ -40,7 +40,7 @@ export default function JobCard({job, handleDelete}:Props) {
  const newPosition = position.charAt(0).toUpperCase() + position.slice(1);
 
   return (
-    <div className="bg-white w-[450px] shadow-lg rounded-lg px-5 py-10">
+    <div className="bg-white w-full  lg:w-[450px] shadow-lg rounded-lg px-5 py-10">
       <div className=" flex gap-7 pt-2 pb-4 border-b">
         <div className=" bg-blue px-5  py-3 grid place-content-center rounded text-white font-bold text-2xl">
           {job.company.charAt(0).toUpperCase()}

@@ -12,11 +12,11 @@ type Props = {
 export default function JobForm({title,handleInputChange,jobDetails,handleFormSubmit,Loading}: Props){
 
   return (
-    <div className=" bg-white w-[90%] mx-auto   rounded-lg h-fit p-10">
+    <div className=" bg-white font-DMSans w-[95%] mx-auto   rounded-lg h-fit p-10">
       <h2 className=" text-4xl text-center py-5 font-openSans">{title}</h2>
       {/* Form for adding job */}
 
-      <section className=" py-5 gap-y-5 grid grid-cols-3 gap-3">
+      <section className=" py-5 gap-y-5 grid md:grid-cols-3 gap-3">
         <div>
           <label htmlFor="position" className="block w-full my-2 font-circular">
             Position
@@ -103,9 +103,9 @@ export default function JobForm({title,handleInputChange,jobDetails,handleFormSu
       <button
        disabled={Loading}
         onClick={handleFormSubmit}
-        className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-[70%] mx-auto mt-7 "
+        className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-full md:w-[70%] mx-auto mt-7 "
       >
-        {Loading? "Submitting": "Submit"}
+        {Loading? "Submitting...": "Submit"}
       </button>
     </div>
   );

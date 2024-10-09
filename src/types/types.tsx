@@ -32,4 +32,6 @@ export interface AuthContextProvider {
   dispatch: React.Dispatch<AuthAction>;
   loading: boolean;
   setLoading: React.Dispatch<boolean>;
+  showMenu: boolean;
+  setShowMenu: React.Dispatch<boolean>;
 }

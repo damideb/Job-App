@@ -20,7 +20,7 @@ export default function EditJob() {
   useEffect(() => {
     // fetch the job details using the id
     const getJob = async () => {
-      setLoading(true);
+  
       try {
         const response = await AuthBase.get(`/jobs/${id}`);
         const data = response.data.job;
@@ -51,6 +51,11 @@ export default function EditJob() {
   };
 
   const EditJobDetails = async () => {
+     const { position, company, jobLocation, jobType, status } = jobDetails;
+     if (!position || !company || !jobLocation || !jobType || !status) {
+       toast.error("All fields are required");
+       return false;
+     }
     setLoading(true);
     try {
       const response = await AuthBase.patch(`/jobs/${id}`, jobDetails);

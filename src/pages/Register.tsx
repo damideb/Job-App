@@ -70,8 +70,8 @@ export default function Register() {
   }
 
   return (
-    <div className="flex justify-between h-[100svh]">
-      <div className=" px-5 bg-[#a8dadc49] flex flex-col gap-3 w-[40%]  justify-center">
+    <div className="flex flex-col-reverse sm:flex-row justify-between">
+      <div className="px-5 bg-[#a8dadc49]  py-5 sm:h-screen flex flex-col gap-5 sm:w-[40%] justify-center">
         <h1 className=" text-3xl font-openSans mb-3">Register your account</h1>
         <form onSubmit={Register} className=" space-y-7 font-circular">
           <div className={`input-container flex flex-col gap-2`}>
@@ -160,7 +160,11 @@ export default function Register() {
           </span>
         </p>
       </div>
-      <img src={image} alt="illuustration" className=" h-full w-[60%]" />
+      <img
+        src={image}
+        alt="illuustration"
+        className="sm:h-full h-[200px]  object-cover sm:w-[60%]"
+      />
     </div>
   );
 }
