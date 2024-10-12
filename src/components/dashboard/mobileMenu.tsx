@@ -35,6 +35,7 @@ export default function MobileMenu() {
         <div className="  text-center font-medium   text-blue my-10">
           {sideContent.map((item, index) => (
             <div
+              onClick={() => setShowMenu(false)}
               key={index}
               className={`${
                 pathname === item.Link

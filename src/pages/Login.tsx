@@ -16,13 +16,12 @@ export default function Login() {
   const Navigate = useNavigate();
 
   const login = async (e: React.FormEvent<HTMLFormElement>) => {
-   e.preventDefault();
+    e.preventDefault();
     const userData = {
       email: formData.email,
       password: formData.password,
     };
 
-    
     try {
       setIsLoggedIn(true);
       const data = await AuthBase.post("auth/login", userData);
@@ -33,20 +32,22 @@ export default function Login() {
           type: "LOGIN",
           payload: { user: user.name },
         });
-        Navigate("/dashboard");
-        toast.success(data?.data?.message);
-        
-      localStorage.setItem("token", token);
+        toast.success("Login successful!");
+        setTimeout(() => {
+          Navigate("/dashboard");
+        }, 2000);
+
+        localStorage.setItem("token", token);
       }
       // console.log(token);
-    } catch(err) {
-       const error = err as AxiosError;
-       if (!error.response) {
-         toast.error(
-           "Network Error: Please check your internet connection and refresh."
-         );
-       } 
-      toast.error('Login Failed. Try again');
+    } catch (err) {
+      const error = err as AxiosError;
+      if (!error.response) {
+        toast.error(
+          "Network Error: Please check your internet connection and refresh."
+        );
+      }
+      toast.error("Login Failed. Try again");
       console.log(error);
     } finally {
       setIsLoggedIn(false);
@@ -110,7 +111,11 @@ export default function Login() {
           </span>
         </p>
       </div>
-      <img src={image} alt="illustration" className="sm:h-full h-[200px]  object-cover sm:w-[65%]" />
+      <img
+        src={image}
+        alt="illustration"
+        className="sm:h-full h-[200px]  object-cover sm:w-[65%]"
+      />
     </div>
   );
 }

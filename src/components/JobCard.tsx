@@ -3,31 +3,24 @@ import { IoLocationOutline } from "react-icons/io5";
 import { CgCalendarDates } from "react-icons/cg";
 import { MdOutlineWorkHistory } from "react-icons/md";
 
-type job = {
-  position: string;
-  company: string;
-  jobLocation: string;
-  createdAt: string;
-  jobType: string;
-  status: string;
-  _id:string
-};
+import { jobDetails } from "../types/types";
 
 type Props ={
-  job:job,
+  job:jobDetails,
   handleDelete: (id:string) => Promise<void>,
 }
 export default function JobCard({job, handleDelete}:Props) {
   const navigate = useNavigate();
 
   const deleteJob = async()=>{
+    const id = job._id as string
 
-   await handleDelete(job._id)
+   await handleDelete(id)
   }
 
   const status = job.status;
 
-  const date = job.createdAt
+  const date = job.createdAt as string
   const dateObject = new Date(date);
 
   const formattedDate = dateObject.toLocaleDateString("en-US", {

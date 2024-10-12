@@ -6,6 +6,8 @@ export type jobDetails = {
   jobLocation: string;
   jobType: string;
   status: string;
+  createdAt?: string |undefined;
+  _id?: string |undefined;
 };
 
 type user = {

@@ -13,12 +13,13 @@ export default function PostJob() {
     company: "",
     jobLocation: "",
     jobType: "",
-    status: "",
+    status: "Pending",
   });
   const [Loading, setLoading] = useState(false);
  // work on job status api (pending and rejeted)
   const navigate = useNavigate();
 
+  console.log(jobDetails)
   const createJobs = async () => {
     const {position, company, jobLocation, jobType, status} = jobDetails
 

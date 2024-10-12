@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 
 function Homepage() {
   const navigate = useNavigate();
+  const token= localStorage.getItem('token');
   return (
     <>
       <div className="flex justify-between items-center px-3 sm:px-14 ">
@@ -13,11 +14,12 @@ function Homepage() {
           </span>{" "}
           JobQuest
         </h1>
-        <Link to='/dashboard'>
+
+       {token && <Link to='/dashboard'>
           <button className=" bg-blue h-fit py-2 sm:py-3 rounded text-xl shadow-md px-3 sm:px-6 drop-shadow-md font-semibold text-white">
             Dashboard
           </button>
-        </Link>
+        </Link>}
       </div>
 
       <main className=" flex flex-col sm:flex-row text-[#333333] justify-between py-[5em] sm:py-[8em] px-3 sm:px-14">

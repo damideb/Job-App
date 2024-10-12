@@ -5,7 +5,7 @@ export const AuthBase = axios.create({
   baseURL: import.meta.env.VITE_URL,
    headers: {
     Accept: "application/json",
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
    }
 });
 

@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { MdWorkspaces, MdGroupWork } from "react-icons/md";
+import { GiEgyptianProfile } from "react-icons/gi";
 import MobileMenu from "./mobileMenu";
 
 export default function Sidebar() {
@@ -6,16 +8,20 @@ export default function Sidebar() {
   const pathname = location.pathname;
 
   const sideContent = [
-    { title: "Add Jobs", Link: "/dashboard" },
-    { title: "Get Jobs", Link: "/dashboard/all-jobs" },
-    { title: "Profile", Link: "/dashboard/profile" },
+    { title: "Add Jobs", Link: "/dashboard", icon: <MdWorkspaces /> },
+    { title: "Get Jobs", Link: "/dashboard/all-jobs", icon: <MdGroupWork /> },
+    {
+      title: "Profile",
+      Link: "/dashboard/profile",
+      icon: <GiEgyptianProfile />,
+    },
   ];
   return (
     <>
     <MobileMenu />
       <div className="hidden md:block w-[300px] ">
         <div className=" fixed  text-black w-[250px] top-0 h-screen bg-white">
-          <h1 className=" px-14 text-3xl font-openSans  py-5">
+          <h1 className=" px-12 text-3xl font-openSans  py-5">
             <Link to="/">JobQuest</Link>
           </h1>
 
@@ -31,9 +37,9 @@ export default function Sidebar() {
               >
                 <Link
                   to={item.Link}
-                  className="px-14 text-2xl hover:text-[#4A76E1]"
+                  className="px-10 text-2xl hover:text-[#4A76E1]"
                 >
-                  {item.title}
+                 <span className=" inline-block pr-2">{item.icon}</span> {item.title}
                 </Link>
               </div>
             ))}

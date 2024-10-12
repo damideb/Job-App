@@ -131,7 +131,7 @@ input:not(:placeholder-shown) ~ .floating-label {
 }
 
 .Rejected{
-  background-color: red !important;
-  color: white;
+  background-color: #efb3b3 ;
+  color: #D96A6A;
 }
 

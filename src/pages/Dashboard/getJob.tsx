@@ -1,28 +1,27 @@
 import { useEffect, useState } from "react";
 import JobCard from "../../components/JobCard";
 import { AuthBase } from "../../api/authBase";
-import { useContext } from "react";
-import { AuthContext } from "../../authContext/context";
-import { AuthContextProvider } from "../../types/types";
+// import { useContext } from "react";
+// import { AuthContext } from "../../authContext/context";
+// import { AuthContextProvider } from "../../types/types";
 import { GridLoader } from "react-spinners";
 import { AxiosError } from "axios";
 import { toast } from "react-toastify";
-
-type jobDetails = {
-  position: string;
-  company: string;
-  jobLocation: string;
-  createdAt: string;
-  jobType: string;
-  status: string;
-  _id: string;
-};
+import SearchContainer from "../../components/dashboard/searchContainer";
+import { jobDetails } from "../../types/types";
 export default function GetJob() {
   const [jobDetails, setJobDetails] = useState<jobDetails[]>([]);
+   const [searchValue, setSearchValue] = useState({
+     company: "",
+     status: "All",
+     jobType: "All",
+   });
   const [loadingJobs, setLoadingJobs] = useState(true);
-  const [jobCount, setCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [count, setCount] = useState(0)
 
-  const { setLoading } = useContext(AuthContext) as AuthContextProvider;
+  // const { setLoding } = useContext(AuthContext) as AuthContextProvider;
 
   // const getAllJobs = useCallback(async () => {
   //   //  setLoading(true)
@@ -31,7 +30,7 @@ export default function GetJob() {
   //     // const status = response.status;
   //     const data = response.data.jobs;
   //     console.log(response.data);
-    
+
   //       setJobDetails(data);
   //     setCount(response.data.count);
   //   } catch (err) {
@@ -48,44 +47,51 @@ export default function GetJob() {
   //   }
   // }, []);
 
+   const getAllJobs = async () => {
+     const { company, status, jobType } = searchValue;
+     //  setLoading(true)
+     try {
+       const response = await AuthBase.get(
+         `/jobs?company=${company}&status=${status}&jobType=${jobType}&page=${page}`
+       );
+       // const status = response.status;
+       const data = response.data.jobs;
+       setCount(response.data.count);
+       setJobDetails(data);
+       setTotalPages(response.data.numOfPages);
+     } catch (err) {
+       const error = err as AxiosError;
+       if (!error.response) {
+         toast.error(
+           "Network Error: Please check your internet connection and refresh."
+         );
+       }
+       console.error(error);
+     } finally {
+       // setLoading(false);
+       setLoadingJobs(false);
+     }
+   };
+
   useEffect(() => {
-    
-  const getAllJobs = async () => {
-    //  setLoading(true)
-    try {
-      const response = await AuthBase.get("/jobs");
-      // const status = response.status;
-      const data = response.data.jobs;
-      setJobDetails(data);
-      setCount(response.data.count);
-    } catch (err) {
-      const error = err as AxiosError;
-      if (!error.response) {
-        toast.error(
-          "Network Error: Please check your internet connection and refresh."
-        );
-      }
-      console.error(error);
-    } finally {
-      setLoading(false);
-      setLoadingJobs(false);
-    }
-  };
+   
 
     getAllJobs();
 
-    // return ()=>{
-    //   console.log("Component Unmounted")
-    //   setLoading(false)
-    //}
-  }, [jobDetails]);
+  }, [page]);
+
+  const handlePrevPage = () => {
+    setPage((page) => page - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage((prevState) => prevState + 1);
+  };
 
   const deleteJob = async (id: string) => {
     try {
-      const response = await AuthBase.delete(`/jobs/${id}`);
-      const filteredResult = jobDetails.filter((job) => job?._id !== id);
-      setJobDetails(filteredResult);
-      console.log(response);
+       await AuthBase.delete(`/jobs/${id}`);
+      getAllJobs()
     } catch (err) {
       const error = err as AxiosError;
       if (!error.response) {
@@ -98,71 +104,12 @@ export default function GetJob() {
       console.log(error);
     }
   };
+
+ 
+
   return (
     <main className="w-[95%]  mx-auto">
-      <div className=" mb-5">
-        <div className=" bg-white font-DMSans    rounded-lg h-fit p-5 sm:p-10">
-          <h2 className=" text-4xl text-center font-openSans">Search Job</h2>
-          {/* Form for adding job */}
-
-          <section className=" py-5 gap-y-5 grid md:grid-cols-3 gap-3">
-            <div>
-              <label
-                htmlFor="Search"
-                className="block w-full my-2 font-circular"
-              >
-                Search
-              </label>
-              <input
-                type="text"
-                placeholder="search by job title"
-                id="Search"
-                name="Search"
-                required
-                className=" w-full bg-primary px-5 py-2 rounded outline-none border"
-              />
-            </div>
-
-            <div>
-              <label
-                className="block w-full my-2 font-circular"
-                htmlFor="jobStatus"
-              >
-                Job status
-              </label>
-              <select
-                id="jobStatus"
-                className="w-full bg-primary px-2 py-2 rounded outline-none border"
-              >
-                <option value="Pending">Pending</option>
-                <option value="Interview">Interview</option>
-                <option value="accepted">Accepted</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </div>
-            <div>
-              <label
-                className="block w-full my-2 font-circular"
-                htmlFor="jobType"
-              >
-                Job Type
-              </label>
-              <select
-                id="jobType"
-                className="w-full bg-primary px-2 py-2 rounded outline-none border"
-              >
-                <option value="All">All</option>
-                <option value="FullTime">Full Time</option>
-                <option value="PartTime">Part Time</option>
-                <option value="Remote">Internship</option>
-              </select>
-            </div>
-          </section>
-          <button className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-full md:w-[70%] mx-auto mt-7 ">
-            Submit
-          </button>
-        </div>
-      </div>
+      <SearchContainer setCount={setCount} setJobDetails={setJobDetails} setTotalPages={setTotalPages} setSearchValue ={setSearchValue} searchValue={searchValue}/>
       <div className="pt-10  my-10">
         {loadingJobs ? (
           <div className=" text-center pt-5">
@@ -179,7 +126,7 @@ export default function GetJob() {
             ) : (
               <h2 className=" text-2xl py-10 font-semibold">
                 {" "}
-                {jobDetails.length} Jobs Found
+                {count} Jobs Found
               </h2>
             )}
 
@@ -192,10 +139,24 @@ export default function GetJob() {
                 );
               })}
             </section>
-            { jobCount >10 && <section className=" my-10 justify-end flex gap-5">
-              <button>Prev</button>
-              <button>Next</button>
-            </section>}
+            {totalPages > 1 && (
+              <section className=" my-10 mr-10 justify-end flex gap-6">
+                <button
+                  disabled={page === 1}
+                  onClick={handlePrevPage}
+                  className=" rounded-md border px-5 py-2 border-blue"
+                >
+                  Prev
+                </button>
+                <button
+                  disabled={page >= totalPages}
+                  onClick={handleNextPage}
+                  className=" rounded-md border px-5 py-2 border-blue"
+                >
+                  Next
+                </button>
+              </section>
+            )}
           </>
         )}
       </div>
