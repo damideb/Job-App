@@ -1,60 +1,60 @@
-import React, {useState} from 'react';
-import {toast} from 'react-toastify'
-import { AxiosError } from "axios";
-import { AuthBase } from '../../api/authBase';
-import { jobDetails } from '../../types/types';
- type search ={
-    company: string;
-    status: string;
-    jobType: string;
-  
- }
+import React from "react";
 
-type Props = {
-  setJobDetails: React.Dispatch<React.SetStateAction<jobDetails[]>>;
-  setCount: (count: number) => void;
-  setTotalPages: (totalPages: number) => void;
-  setSearchValue: React.Dispatch<React.SetStateAction<search>>;
-  searchValue: search;
+type search = {
+  company: string;
+  status: string;
+  jobType: string;
 };
 
-export default function SearchContainer({setJobDetails, setCount, setTotalPages, setSearchValue, searchValue}:Props) {
-  
-    const [submitting, setSubmitting] = useState(false);
-      const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-      ) => {
-        const { name, value } = e.target;
-        setSearchValue((prevState) => ({
-          ...prevState,
-          [name]: value,
-        }));
-      };
+type Props = {
+  setSearchValue: React.Dispatch<React.SetStateAction<search>>;
+  searchValue: search;
+  setSearchParams: (searchParams: search) => void; //New prop added to update search parameters in URL
+  resetFilter: () => void;
+  loadingJobs: boolean;
+  searchParams: URLSearchParams;
+};
 
-      const searchJob = async () => {
-        setSubmitting(true);
-        const { company, status, jobType } = searchValue;
-        try {
-          const response = await AuthBase.get(
-            `/jobs?company=${company}&status=${status}&jobType=${jobType}`
-          );
-          // const status = response.status;
-          const data = response.data.jobs;
-          setJobDetails(data);
-          setCount(response.data.count);
-          setTotalPages(response.data.numOfPages);
-        } catch (err) {
-          const error = err as AxiosError;
-          if (!error.response) {
-            toast.error(
-              "Network Error: Please check your internet connection and refresh."
-            );
-          }
-          console.error(error);
-        } finally {
-          setSubmitting(false);
-        }
-      };
+export default function SearchContainer({
+  setSearchValue,
+  searchValue,
+  setSearchParams,
+  searchParams,
+  resetFilter,
+  loadingJobs,
+}: Props) {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setSearchValue((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // const debounce = (func, delay) => {
+  //   let timer;
+  //   return (...args) => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => func(...args), delay);
+  //   };
+  // };.
+  // const deboundeFunc = debounce(searchJob, 300)
+  //Debounce function to handle delay if search is done on every keystroke
+
+  const searchJob = async () => {
+    const { company, status, jobType } = searchValue;
+
+    const currentParams = Object.fromEntries(searchParams.entries());
+
+    setSearchParams({ ...currentParams, company, status, jobType });
+  };
+
+  
+
+  
+
   return (
     <div className=" mb-5">
       <div className=" bg-white font-DMSans    rounded-lg h-fit p-5 sm:p-10">
@@ -71,6 +71,7 @@ export default function SearchContainer({setJobDetails, setCount, setTotalPages,
               placeholder="search by company name"
               id="Search"
               name="company"
+              value={searchValue.company}
               onChange={handleChange}
               required
               className=" w-full bg-primary px-5 py-2 rounded outline-none border"
@@ -88,12 +89,13 @@ export default function SearchContainer({setJobDetails, setCount, setTotalPages,
               id="jobStatus"
               name="status"
               onChange={handleChange}
+              value={searchValue.status}
               className="w-full bg-primary px-2 py-2 rounded outline-none border"
             >
               <option value="All">All</option>
               <option value="Pending">Pending</option>
               <option value="Interview">Interview</option>
-              <option value="accepted">Accepted</option>
+              <option value="Accepted">Accepted</option>
               <option value="Rejected">Rejected</option>
             </select>
           </div>
@@ -108,6 +110,7 @@ export default function SearchContainer({setJobDetails, setCount, setTotalPages,
               id="jobType"
               name="jobType"
               onChange={handleChange}
+              value={searchValue.jobType}
               className="w-full bg-primary px-2 py-2 rounded outline-none border"
             >
               <option value="All">All</option>
@@ -117,12 +120,22 @@ export default function SearchContainer({setJobDetails, setCount, setTotalPages,
             </select>
           </div>
         </section>
-        <button
-          onClick={searchJob}
-          className=" flex justify-center bg-blue text-white p-3 text-xl font-openSans w-full md:w-[70%] mx-auto mt-7 "
-        >
-          {submitting ? "Submiting ..." : "Submit"}
-        </button>
+        <div className=" flex gap-3 mt-7 text-xl font-circular">
+          <button
+            onClick={searchJob}
+            disabled={loadingJobs}
+            className=" bg-blue text-white p-3 w-full md:w-[70%]   "
+          >
+            Submit
+          </button>
+          <button
+            onClick={resetFilter}
+            disabled={loadingJobs}
+            className=" bg-blue text-white p-3  w-full md:w-[25%] "
+          >
+            Reset Search filter
+          </button>
+        </div>
       </div>
     </div>
   );

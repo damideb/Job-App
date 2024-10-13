@@ -4,22 +4,25 @@ import { useContext } from "react";
 import { AuthContext } from "../../authContext/context";
 import { AuthContextProvider } from "../../types/types";
 
-export default function MobileMenu() {
+type sideContent ={
+  title:string;
+  Link:string;
+  icon: JSX.Element
+}
+type Props ={
+  sideContent: sideContent[];
+}
+export default function MobileMenu({sideContent}:Props) {
   const location = useLocation();
   const pathname = location.pathname;
 
   const {showMenu, setShowMenu} = useContext(AuthContext) as AuthContextProvider;
 
-  const sideContent = [
-    { title: "Add Jobs", Link: "/dashboard" },
-    { title: "Get Jobs", Link: "/dashboard/all-jobs" },
-    { title: "Profile", Link: "/dashboard/profile" },
-  ];
   return (
     <div
       className={` ${
         showMenu ? " opacity-100 visible" : " opacity-0 invisible"
-      } transition-all duration-700  fixed w-[95%] py-10 z-50   rounded-lg h-[90vh] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] shadow-2xl drop-shadow-lg  bg-white md:hidden`}
+      } transition-all duration-700  fixed w-[95%] py-10 z-50   rounded-lg h-fit top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] shadow-2xl drop-shadow-lg  bg-white md:hidden`}
     >
       <div className="">
         <button
@@ -47,6 +50,7 @@ export default function MobileMenu() {
                 to={item.Link}
                 className="px-14 text-2xl hover:text-[#4A76E1]"
               >
+                <span className=" inline-block pr-10">{item.icon}</span>
                 {item.title}
               </Link>
             </div>

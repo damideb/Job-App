@@ -22,7 +22,7 @@ AuthBase.interceptors.request.use((config)=>{
 
 AuthBase.interceptors.response.use((response)=> response,
 (error)=>{
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.status === 401 && error.response.data.msg !=='Invalid credentials') {
         // clear access token on 401
         localStorage.removeItem("token");
         // navigate to login page

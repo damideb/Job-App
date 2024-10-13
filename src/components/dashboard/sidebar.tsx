@@ -18,7 +18,7 @@ export default function Sidebar() {
   ];
   return (
     <>
-    <MobileMenu />
+    <MobileMenu sideContent={sideContent} />
       <div className="hidden md:block w-[300px] ">
         <div className=" fixed  text-black w-[250px] top-0 h-screen bg-white">
           <h1 className=" px-12 text-3xl font-openSans  py-5">

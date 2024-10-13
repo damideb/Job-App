@@ -7,6 +7,9 @@ import { AuthContextProvider } from "../types/types";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 
+interface ErrorResponseData {
+  msg: string;
+}
 export default function Login() {
   const { dispatch } = useContext(AuthContext) as AuthContextProvider;
 
@@ -41,13 +44,23 @@ export default function Login() {
       }
       // console.log(token);
     } catch (err) {
-      const error = err as AxiosError;
+      const error = err as AxiosError<ErrorResponseData>;
       if (!error.response) {
         toast.error(
           "Network Error: Please check your internet connection and refresh."
         );
       }
-      toast.error("Login Failed. Try again");
+      if (
+        error.response?.data &&
+        ( error.response.data).msg === "Invalid credentials"
+      ) {
+        toast.error(
+          "Invalid credentials. Please type in the correct email or password."
+        );
+      } else {
+        toast.error("Login Failed. Try again");
+      }
+     
       console.log(error);
     } finally {
       setIsLoggedIn(false);

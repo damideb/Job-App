@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import JobCard from "../../components/JobCard";
 import { AuthBase } from "../../api/authBase";
 // import { useContext } from "react";
@@ -9,89 +10,76 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import SearchContainer from "../../components/dashboard/searchContainer";
 import { jobDetails } from "../../types/types";
+
 export default function GetJob() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [jobDetails, setJobDetails] = useState<jobDetails[]>([]);
-   const [searchValue, setSearchValue] = useState({
-     company: "",
-     status: "All",
-     jobType: "All",
-   });
   const [loadingJobs, setLoadingJobs] = useState(true);
-  const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
-  // const { setLoding } = useContext(AuthContext) as AuthContextProvider;
+  const [page, setPage] = useState(Number(searchParams.get("page")) || 1);
+  const [searchValue, setSearchValue] = useState({
+    company: searchParams.get("company") || "",
+    status: searchParams.get("status") || "All",
+    jobType: searchParams.get("jobType") || "All",
+  });
 
-  // const getAllJobs = useCallback(async () => {
-  //   //  setLoading(true)
-  //   try {
-  //     const response = await AuthBase.get("/jobs");
-  //     // const status = response.status;
-  //     const data = response.data.jobs;
-  //     console.log(response.data);
-
-  //       setJobDetails(data);
-  //     setCount(response.data.count);
-  //   } catch (err) {
-  //     const error = err as AxiosError;
-  //     if (!error.response) {
-  //       toast.error(
-  //         "Network Error: Please check your internet connection and refresh."
-  //       );
-  //     }
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //     setLoadingJobs(false);
-  //   }
-  // }, []);
-
-   const getAllJobs = async () => {
-     const { company, status, jobType } = searchValue;
-     //  setLoading(true)
-     try {
-       const response = await AuthBase.get(
-         `/jobs?company=${company}&status=${status}&jobType=${jobType}&page=${page}`
-       );
-       // const status = response.status;
-       const data = response.data.jobs;
-       setCount(response.data.count);
-       setJobDetails(data);
-       setTotalPages(response.data.numOfPages);
-     } catch (err) {
-       const error = err as AxiosError;
-       if (!error.response) {
-         toast.error(
-           "Network Error: Please check your internet connection and refresh."
-         );
-       }
-       console.error(error);
-     } finally {
-       // setLoading(false);
-       setLoadingJobs(false);
-     }
-   };
+  const getAllJobs = async () => {
+    const { company, status, jobType } = searchValue;
+    setLoadingJobs(true);
+    try {
+      const response = await AuthBase.get(
+        `/jobs?company=${company}&status=${status}&jobType=${jobType}&page=${page}`
+      );
+      const data = response.data.jobs;
+      setCount(response.data.count);
+      setJobDetails(data);
+      setTotalPages(response.data.numOfPages);
+    } catch (err) {
+      const error = err as AxiosError;
+      if (!error.response) {
+        toast.error(
+          "Network Error: Please check your internet connection and refresh."
+        );
+      }
+      console.error(error);
+    } finally {
+      setLoadingJobs(false);
+    }
+  };
 
   useEffect(() => {
-   
-
     getAllJobs();
-
-  }, [page]);
+  }, [searchParams]);
 
   const handlePrevPage = () => {
-    setPage((page) => page - 1);
+    setPage((prevState) => {
+      const CurrentPage = prevState - 1;
+      setSearchParams((searchParams) => {
+        searchParams.set("page", CurrentPage.toString());
+        return searchParams;
+      });
+      return CurrentPage;
+    });
   };
 
   const handleNextPage = () => {
-    setPage((prevState) => prevState + 1);
+    setPage((prevState) => {
+      const next = prevState + 1;
+
+      // fromEntries convert an array  of key/pair values to an object. entries convert a given object to an array of the enumerable own property.
+      const currentParams = Object.fromEntries(searchParams.entries());
+      setSearchParams({ ...currentParams, page: next.toString() });
+      return next;
+    });
   };
 
   const deleteJob = async (id: string) => {
     try {
-       await AuthBase.delete(`/jobs/${id}`);
-      getAllJobs()
+      await AuthBase.delete(`/jobs/${id}`);
+      getAllJobs();
     } catch (err) {
       const error = err as AxiosError;
       if (!error.response) {
@@ -105,11 +93,25 @@ export default function GetJob() {
     }
   };
 
- 
-
+  const resetFilter = () => {
+    setSearchValue({ company: "", status: "All", jobType: "All" });
+    console.log(searchValue);
+    // check if search params are present
+    if (searchParams.size) {
+      setSearchParams({});
+      setPage(1);
+    }
+  };
   return (
     <main className="w-[95%]  mx-auto">
-      <SearchContainer setCount={setCount} setJobDetails={setJobDetails} setTotalPages={setTotalPages} setSearchValue ={setSearchValue} searchValue={searchValue}/>
+      <SearchContainer
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+        setSearchParams={setSearchParams}
+        searchParams={searchParams}
+        resetFilter={resetFilter}
+        loadingJobs={loadingJobs}
+      />
       <div className="pt-10  my-10">
         {loadingJobs ? (
           <div className=" text-center pt-5">
@@ -130,7 +132,7 @@ export default function GetJob() {
               </h2>
             )}
 
-            <section className=" grid sm:grid-cols-1  lg:grid-cols-2 gap-y-5 ">
+            <section className=" grid sm:grid-cols-1 lg:grid-cols-2 gap-y-5 ">
               {jobDetails?.map((job, i) => {
                 return (
                   <div key={i}>

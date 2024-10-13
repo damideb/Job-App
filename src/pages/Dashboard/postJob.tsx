@@ -19,7 +19,6 @@ export default function PostJob() {
  // work on job status api (pending and rejeted)
   const navigate = useNavigate();
 
-  console.log(jobDetails)
   const createJobs = async () => {
     const {position, company, jobLocation, jobType, status} = jobDetails
 
