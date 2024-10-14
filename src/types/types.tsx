@@ -10,6 +10,18 @@ export type jobDetails = {
   _id?: string |undefined;
 };
 
+export type jobSearch = {
+  employer_name: string;
+  job_title: string;
+  job_apply_link: string;
+  job_city:string;
+  job_state: string;
+  job_description: string;
+  job_is_remote: boolean;
+  job_employment_type: string;
+  job_posted_at_datetime_utc: string;
+};
+
 type user = {
   name: string;
   email: string;

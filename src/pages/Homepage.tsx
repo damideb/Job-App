@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import illustation from "../assets/illustration.svg";
 import { useNavigate } from "react-router";
+import Logo from "../components/Logo";
 
 function Homepage() {
   const navigate = useNavigate();
@@ -8,12 +9,7 @@ function Homepage() {
   return (
     <>
       <div className="flex justify-between items-center px-3 sm:px-14 ">
-        <h1 className=" text-xl sm:text-3xl font-openSans text-[#1D3557] py-10">
-          <span className=" font-openSans bg-blue px-3 sm:px-5 py-1 sm:py-3 sm:mx-2 mx-1 rounded text-white font-bold w-fit text-xl sm:text-2xl">
-            JQ
-          </span>{" "}
-          JobQuest
-        </h1>
+        <Logo/>
 
        {token && <Link to='/dashboard'>
           <button className=" bg-blue h-fit py-2 sm:py-3 rounded text-xl shadow-md px-3 sm:px-6 drop-shadow-md font-semibold text-white">
@@ -41,15 +37,15 @@ function Homepage() {
           <div className=" font-openSans flex gap-5 my-3 ">
             <button
               className="   border-2 border-[#1D3557] w-[180px] py-3 text-xl  login-button "
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/apply")}
             >
-              Login
+              Apply
             </button>
             <button
               className=" border-2 border-[#1D3557]  w-[180px] py-3 text-xl getstarted-button"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/login")}
             >
-              Get Started
+              Login
             </button>
           </div>
         </div>

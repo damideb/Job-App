@@ -30,8 +30,14 @@ export default function GetJob() {
     const { company, status, jobType } = searchValue;
     setLoadingJobs(true);
     try {
-      const response = await AuthBase.get(
-        `/jobs?company=${company}&status=${status}&jobType=${jobType}&page=${page}`
+      const response = await AuthBase.get( `/jobs`, {
+          params:{
+            company: company,
+            status: status,
+            jobType: jobType,
+            page: page,
+          }
+        }
       );
       const data = response.data.jobs;
       setCount(response.data.count);

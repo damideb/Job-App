@@ -63,7 +63,7 @@ body {
   display: grid;
   place-content: center;
   color: white;
-  content: "Login";
+  content: "Apply";
   height: 100%;
   background-color: #1d3557;
   transition: transform 0.7s ease;
@@ -138,5 +138,9 @@ input:not(:placeholder-shown) ~ .floating-label {
 button:disabled{
   cursor: not-allowed;
  opacity: 0.3;
+}
+
+.scrollbar{
+  scrollbar-width: none;
 }
 

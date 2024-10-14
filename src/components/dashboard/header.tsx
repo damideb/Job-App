@@ -16,7 +16,7 @@ export default function Header() {
       <button className="md:hidden" onClick={() => setShowMenu(true)}>
         <CiMenuBurger className="text-3xl " />
       </button>
-      <h1 className=" sm:px-5 text-xl sm:text-2xl font-openSans text-blue  py-5">
+      <h1 className=" hidden sm:block sm:px-5 text-xl sm:text-2xl font-openSans text-blue  py-5">
         <Link to="/">JobQuest</Link>
       </h1>
       <h2 className="hidden md:block  text-center font-semibold font-openSans text-2xl ">

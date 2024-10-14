@@ -1,5 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import { MdWorkspaces, MdGroupWork } from "react-icons/md";
+import {
+  MdWorkspaces,
+  MdGroupWork,
+  MdOutlineWorkspacePremium,
+} from "react-icons/md";
 import { GiEgyptianProfile } from "react-icons/gi";
 import MobileMenu from "./mobileMenu";
 
@@ -9,6 +13,11 @@ export default function Sidebar() {
 
   const sideContent = [
     { title: "Add Jobs", Link: "/dashboard", icon: <MdWorkspaces /> },
+    {
+      title: "Apply",
+      Link: "/dashboard/application",
+      icon: <MdOutlineWorkspacePremium />,
+    },
     { title: "Get Jobs", Link: "/dashboard/all-jobs", icon: <MdGroupWork /> },
     {
       title: "Profile",
@@ -18,7 +27,7 @@ export default function Sidebar() {
   ];
   return (
     <>
-    <MobileMenu sideContent={sideContent} />
+      <MobileMenu sideContent={sideContent} />
       <div className="hidden md:block w-[300px] ">
         <div className=" fixed  text-black w-[250px] top-0 h-screen bg-white">
           <h1 className=" px-12 text-3xl font-openSans  py-5">
@@ -39,7 +48,8 @@ export default function Sidebar() {
                   to={item.Link}
                   className="px-10 text-2xl hover:text-[#4A76E1]"
                 >
-                 <span className=" inline-block pr-2">{item.icon}</span> {item.title}
+                  <span className=" inline-block pr-2">{item.icon}</span>{" "}
+                  {item.title}
                 </Link>
               </div>
             ))}
