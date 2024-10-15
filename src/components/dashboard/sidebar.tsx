@@ -15,7 +15,7 @@ export default function Sidebar() {
     { title: "Add Jobs", Link: "/dashboard", icon: <MdWorkspaces /> },
     {
       title: "Apply",
-      Link: "/dashboard/application",
+      Link: "/apply",
       icon: <MdOutlineWorkspacePremium />,
     },
     { title: "Get Jobs", Link: "/dashboard/all-jobs", icon: <MdGroupWork /> },

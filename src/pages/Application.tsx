@@ -48,6 +48,15 @@ export default function Application() {
       "x-rapidapi-host": "jsearch.p.rapidapi.com",
     },
   };
+
+  //   function sortDate (jobs){
+  //     jobs.sort((a, b) => {
+  //       const dateA = new Date(a.job_posted_at_datetime_utc);
+  //       const dateB = new Date(b.job_posted_at_datetime_utc);
+  //       return dateB - dateA;
+  //     });
+
+  //   }
   useEffect(() => {
     const getJobs = async () => {
       setSearching(true);
@@ -56,28 +65,38 @@ export default function Application() {
 
         const data = response.data.data;
 
-        setJobList(() => {
-          return data.map((job: jobSearch) => ({
-            employer_name: job.employer_name,
-            job_title: job.job_title,
-            job_apply_link: job.job_apply_link,
-            job_city: job.job_city,
-            job_state: job.job_state,
-            job_description: job.job_description,
-            job_is_remote: job.job_is_remote,
-            job_employment_type: job.job_employment_type,
-            job_posted_at_datetime_utc: job.job_posted_at_datetime_utc,
-          }));
-        });
+        const dataList = data.map((job: jobSearch) => ({
+          employer_name: job.employer_name,
+          job_title: job.job_title,
+          job_apply_link: job.job_apply_link,
+          job_city: job.job_city,
+          job_state: job.job_state,
+          job_description: job.job_description,
+          job_is_remote: job.job_is_remote,
+          job_employment_type: job.job_employment_type,
+          job_posted_at_datetime_utc: job.job_posted_at_datetime_utc,
+        }));
+
+        const sortedList = (): jobSearch[] => {
+          return dataList.sort((a: jobSearch, b: jobSearch) => {
+            const dateA = new Date(a.job_posted_at_datetime_utc).getTime();
+            const dateB = new Date(b.job_posted_at_datetime_utc).getTime();
+            return dateB - dateA;
+          });
+        };
+
+        setJobList(sortedList());
         console.log(jobList, data);
       } catch (error) {
+         throw new Error("Failed to fetch data");
         console.error(error);
+        
       } finally {
         setLoading(false);
         setSearching(false);
       }
     };
-    // getJobs();
+    getJobs();
   }, [searchParams]);
 
   const handleInputChange = (

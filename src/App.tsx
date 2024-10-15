@@ -11,7 +11,6 @@ import AuthLayout from "./components/AuthLayout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Error from "./pages/error";
-import Apply from "./pages/Dashboard/Apply";
 import Application from "./pages/Application";
 
 
@@ -47,10 +46,7 @@ const Router = createBrowserRouter([
                 path: "/dashboard",
                 element: <PostJob />,
               },
-              {
-                path: "/dashboard/application",
-                element: <Apply />,
-              },
+              
               {
                 path: "/dashboard/all-jobs",
                 element: <GetJob />,

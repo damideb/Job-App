@@ -4,7 +4,7 @@ import { jobSearch } from "../../types/types";
 type JobDetailsProps = {
   job: jobSearch;
 };
-export default function JobDetails({ job }: JobDetailsProps) {
+export default function JobDetails({ job }:JobDetailsProps) {
   const date = job.job_posted_at_datetime_utc as string;
   const dateObject = new Date(date);
 
