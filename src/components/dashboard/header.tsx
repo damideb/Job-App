@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../authContext/context";
-import { AuthContextProvider } from "../../types/types";
+import { useState } from "react";
 import { CiMenuBurger } from "react-icons/ci";
 import { MdOutlineArrowDropDown, MdArrowDropUp } from "react-icons/md";
 import Logout from "../logout";
+import useGlobalContext from "../../hooks/globalContext";
 
 export default function Header() {
-  const { state, setShowMenu } = useContext(AuthContext) as AuthContextProvider;
+  const { state, setShowMenu } = useGlobalContext();
 
   const [showLogout, setShowLogout] = useState(false);
 
@@ -31,10 +30,15 @@ export default function Header() {
             {state.user?.name.charAt(0)}
           </span>
           {state.user?.name}
-        { !showLogout ?  <span className=" font-bold">
-            <MdOutlineArrowDropDown className="" />
-          </span> :
-          <span><MdArrowDropUp/></span>}
+          {!showLogout ? (
+            <span className=" font-bold">
+              <MdOutlineArrowDropDown className="" />
+            </span>
+          ) : (
+            <span>
+              <MdArrowDropUp />
+            </span>
+          )}
         </button>
         {showLogout && <Logout />}
       </div>

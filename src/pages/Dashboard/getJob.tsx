@@ -10,6 +10,7 @@ import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import SearchContainer from "../../components/dashboard/searchContainer";
 import { jobDetails } from "../../types/types";
+import { useError } from "../../hooks/error";
 
 export default function GetJob() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +26,8 @@ export default function GetJob() {
     status: searchParams.get("status") || "All",
     jobType: searchParams.get("jobType") || "All",
   });
+
+  const {setError} = useError()
 
   const getAllJobs = async () => {
     const { company, status, jobType } = searchValue;
@@ -50,6 +53,7 @@ export default function GetJob() {
           "Network Error: Please check your internet connection and refresh."
         );
       }
+      setError( `There was an error: ${error.message}`)
       console.error(error);
     } finally {
       setLoadingJobs(false);

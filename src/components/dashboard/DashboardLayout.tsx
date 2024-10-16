@@ -3,20 +3,17 @@ import Header from "./header";
 import Sidebar from "./sidebar";
 import { AuthBase } from "../../api/authBase";
 import { useEffect } from "react";
-import { useContext } from "react";
-import { AuthContext } from "../../authContext/context";
-import { AuthContextProvider } from "../../types/types";
 import Loader from "../loader";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import { useError } from "../../hooks/error";
+import useGlobalContext from "../../hooks/globalContext";
 
 export default function DashboardLayout() {
+  const { dispatch, loading, setLoading } = useGlobalContext()
 
-
-  const { dispatch, loading, setLoading } = useContext(
-    AuthContext
-  ) as AuthContextProvider;
-
+  const {setError, error} = useError()
+  console.log(error, 'yy')
   useEffect(() => {
     const getUser = async function () {
       try {
@@ -28,12 +25,16 @@ export default function DashboardLayout() {
             payload: { user: data.data.user },
           });
         }
-      } catch (err ) {
-         const error = err as AxiosError;
-        if (!error.response) { // the error object does not contain a response when there is a network failure
-          toast.error("Network Error: Please check your internet connection and refresh.");
-        } 
-        console.error(error);
+      } catch (err) {
+        const error = err as AxiosError;
+        if (!error.response) {
+          // the error object does not contain a response when there is a network failure
+          toast.error(
+            "Network Error: Please check your internet connection and refresh."
+          );
+        }
+
+        setError(`${error.message}. Pleaase, try again `);
       } finally {
         setLoading(false);
       }

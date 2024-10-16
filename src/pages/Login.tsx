@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import image from "../assets/auth.png";
 import { AuthBase } from "../api/authBase";
 import { useState, useContext } from "react";
-import { AuthContext } from "../authContext/context";
+import { AuthContext } from "../Context/context";
 import { AuthContextProvider } from "../types/types";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
@@ -52,7 +52,7 @@ export default function Login() {
       }
       if (
         error.response?.data &&
-        ( error.response.data).msg === "Invalid credentials"
+        error.response.data.msg === "Invalid credentials"
       ) {
         toast.error(
           "Invalid credentials. Please type in the correct email or password."
@@ -60,7 +60,7 @@ export default function Login() {
       } else {
         toast.error("Login Failed. Try again");
       }
-     
+
       console.log(error);
     } finally {
       setIsLoggedIn(false);

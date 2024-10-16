@@ -12,12 +12,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Error from "./pages/error";
 import Application from "./pages/Application";
-
-
+import GlobalErrorDisplay from "./components/error/GlobalError";
 
 const Router = createBrowserRouter([
   {
     errorElement: <Error />,
+
     children: [
       {
         path: "/",
@@ -46,7 +46,7 @@ const Router = createBrowserRouter([
                 path: "/dashboard",
                 element: <PostJob />,
               },
-              
+
               {
                 path: "/dashboard/all-jobs",
                 element: <GetJob />,
@@ -70,6 +70,7 @@ function App() {
   return (
     <>
       <RouterProvider router={Router} />
+      <GlobalErrorDisplay />
       <ToastContainer
         autoClose={2000}
         draggable={false}

@@ -4,6 +4,7 @@ import { CgCalendarDates } from "react-icons/cg";
 import { MdOutlineWorkHistory } from "react-icons/md";
 
 import { jobDetails } from "../types/types";
+import { formatDate } from "../utils/utils";
 
 type Props ={
   job:jobDetails,
@@ -14,20 +15,13 @@ export default function JobCard({job, handleDelete}:Props) {
 
   const deleteJob = async()=>{
     const id = job._id as string
-
    await handleDelete(id)
   }
-
   const status = job.status;
 
   const date = job.createdAt as string
-  const dateObject = new Date(date);
 
-  const formattedDate = dateObject.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const formattedDate = formatDate(date)
 
   const position = job.position
  const newPosition = position.charAt(0).toUpperCase() + position.slice(1);

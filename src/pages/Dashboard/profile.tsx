@@ -1,11 +1,10 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../authContext/context";
-import { AuthContextProvider } from "../../types/types";
+import { useState } from "react";
 import { AuthBase } from "../../api/authBase";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import useGlobalContext from "../../hooks/globalContext";
 export default function Profile() {
-  const { state, dispatch } = useContext(AuthContext) as AuthContextProvider;
+  const { state, dispatch } = useGlobalContext();
 
   const [profile, setProfile] = useState({
     name: state?.user?.name,
@@ -22,14 +21,10 @@ export default function Profile() {
 
   const updateProfile = async () => {
     const { name, email, location } = profile;
-   if (
-     Object.values({ name,email, location }).some(
-       (field) => !field
-     )
-   ) {
-     toast.error("All fields are required");
-     return false;
-   }
+    if (Object.values({ name, email, location }).some((field) => !field)) {
+      toast.error("All fields are required");
+      return false;
+    }
 
     try {
       setUpdating(true);
@@ -49,8 +44,8 @@ export default function Profile() {
         toast.error(
           "Network Error: Please check your internet connection and refresh."
         );
-      } 
-      
+      }
+
       toast.error("Failed to update profile!. Please try again");
       console.error(error);
     } finally {

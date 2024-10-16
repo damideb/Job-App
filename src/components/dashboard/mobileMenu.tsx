@@ -1,22 +1,20 @@
 import { Link, useLocation } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
-import { useContext } from "react";
-import { AuthContext } from "../../authContext/context";
-import { AuthContextProvider } from "../../types/types";
+import useGlobalContext from "../../hooks/globalContext";
 
-type sideContent ={
-  title:string;
-  Link:string;
-  icon: JSX.Element
-}
-type Props ={
+type sideContent = {
+  title: string;
+  Link: string;
+  icon: JSX.Element;
+};
+type Props = {
   sideContent: sideContent[];
-}
-export default function MobileMenu({sideContent}:Props) {
+};
+export default function MobileMenu({ sideContent }: Props) {
   const location = useLocation();
   const pathname = location.pathname;
 
-  const {showMenu, setShowMenu} = useContext(AuthContext) as AuthContextProvider;
+  const { showMenu, setShowMenu } = useGlobalContext()
 
   return (
     <div

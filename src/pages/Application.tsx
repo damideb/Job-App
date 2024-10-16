@@ -7,6 +7,8 @@ import JobDetailsSection from "../components/application/JobDetailsSection";
 import { jobSearch } from "../types/types";
 import Loader from "../components/loader";
 import Logo from "../components/Logo";
+import { useError } from "../hooks/error";
+import { AxiosError } from "axios";
 
 export default function Application() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,19 +46,12 @@ export default function Application() {
       date_posted: "all",
     },
     headers: {
-      "x-rapidapi-key": "d4136ec5b8mshb19ab4391b3e124p1674aajsn8da47b34160a",
+      "x-rapidapi-key": import.meta.env.VITE_API_KEY,
       "x-rapidapi-host": "jsearch.p.rapidapi.com",
     },
   };
 
-  //   function sortDate (jobs){
-  //     jobs.sort((a, b) => {
-  //       const dateA = new Date(a.job_posted_at_datetime_utc);
-  //       const dateB = new Date(b.job_posted_at_datetime_utc);
-  //       return dateB - dateA;
-  //     });
-
-  //   }
+  const {setError} = useError()
   useEffect(() => {
     const getJobs = async () => {
       setSearching(true);
@@ -87,9 +82,18 @@ export default function Application() {
 
         setJobList(sortedList());
         console.log(jobList, data);
-      } catch (error) {
-         throw new Error("Failed to fetch data");
-        console.error(error);
+      } catch (err) {
+         const error = err as AxiosError;
+         console.log(error)
+         if (!error.response) {
+           // the error object does not contain a response when there is a network failure
+           setError(
+             "Network Error: Please check your internet connection and refresh."
+           );
+         }
+        setError(`There was an error: ${error.status} ${error.message}`);
+        //  throw new Error("Failed to fetch data");
+       
         
       } finally {
         setLoading(false);
