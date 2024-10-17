@@ -53,8 +53,6 @@ export default function SearchContainer({
 
   
 
-  
-
   return (
     <div className=" mb-5">
       <div className=" bg-white font-DMSans    rounded-lg h-fit p-5 sm:p-10">
@@ -120,18 +118,18 @@ export default function SearchContainer({
             </select>
           </div>
         </section>
-        <div className=" flex gap-3 mt-7 text-xl font-circular">
+        <div className=" flex gap-3 mt-7 md:text-xl font-circular">
           <button
             onClick={searchJob}
             disabled={loadingJobs}
-            className=" bg-blue text-white p-3 w-full md:w-[70%]   "
+            className=" bg-blue text-white md:p-3 p-2 w-full md:w-[70%]   "
           >
             Submit
           </button>
           <button
             onClick={resetFilter}
             disabled={loadingJobs}
-            className=" bg-blue text-white p-3  w-full md:w-[25%] "
+            className=" bg-blue text-white min-w-fit p-2 md:p-3  w-full md:w-[25%] "
           >
             Reset Search filter
           </button>

@@ -8,27 +8,29 @@ function Homepage() {
   const token= localStorage.getItem('token');
   return (
     <>
-      <div className="flex justify-between items-center px-3 sm:px-14 ">
-        <Logo/>
+      <div className="flex justify-between items-center px-3  py-3 sm:px-14 ">
+        <Logo />
 
-       {token && <Link to='/dashboard'>
-          <button className=" bg-blue h-fit py-2 sm:py-3 rounded text-xl shadow-md px-3 sm:px-6 drop-shadow-md font-semibold text-white">
-            Dashboard
-          </button>
-        </Link>}
+        {token && (
+          <Link to="/dashboard">
+            <button className=" bg-blue h-fit py-2 sm:py-3 rounded sm:text-xl shadow-md px-3 sm:px-6 drop-shadow-md font-semibold text-white">
+              Dashboard
+            </button>
+          </Link>
+        )}
       </div>
 
       <main className=" flex flex-col sm:flex-row text-[#333333] justify-between py-[5em] sm:py-[8em] px-3 sm:px-14">
         <div className=" sm:w-[65%]">
           <p className=" text-[13px] font-circular bg-[#A8DADC] w-fit px-2 py-1 rounded-full">
-            Track Your Job Search. Stay Organized. Get Hired
+            Apply, Track Your Job Search & Get Hired.
           </p>
           <h1 className=" text-[1.5rem] sm:text-[2rem] pb-3 font-semibold font-openSans">
             STREAMLINE YOUR <span className=" text-[#1a3e70]">JOB </span>SEARCH
             WITH EASE
           </h1>
           <h2 className="pb-5 font-DMSans">
-            Keep track of all your job applications and interviews in one place.
+            Apply to jobs, Keep track of all your job applications and interviews in one place.
             Stay organized, focused, and on top of your career journey. Join
             thousands of job seekers who have streamlined their search and
             secured their dream job with our application tracking tool.

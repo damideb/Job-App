@@ -72,7 +72,7 @@ export default function Register() {
   return (
     <div className="flex flex-col-reverse sm:flex-row justify-between">
       <div className="px-5 bg-[#a8dadc49]  py-5 sm:h-screen flex flex-col gap-5 sm:w-[40%] justify-center">
-        <h1 className=" text-3xl font-openSans mb-3">Register your account</h1>
+        <h1 className=" text-xl md:text-3xl font-openSans mb-3">Register your account</h1>
         <form onSubmit={Register} className=" space-y-7 font-circular">
           <div className={`input-container flex flex-col gap-2`}>
             <input

@@ -12,7 +12,7 @@ type Props = {
 export default function JobForm({title,handleInputChange,jobDetails,handleFormSubmit,Loading}: Props){
 
   return (
-    <div className=" bg-white font-DMSans w-[95%] mx-auto   rounded-lg h-fit p-10">
+    <div className=" bg-white font-DMSans w-[95%] mx-auto   rounded-lg h-fit p-5 md:p-10">
       <h2 className=" text-4xl text-center py-5 font-openSans">{title}</h2>
       {/* Form for adding job */}
 

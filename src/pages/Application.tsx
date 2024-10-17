@@ -9,6 +9,7 @@ import Loader from "../components/loader";
 import Logo from "../components/Logo";
 import { useError } from "../hooks/error";
 import { AxiosError } from "axios";
+import { IoIosArrowBack } from "react-icons/io";
 
 export default function Application() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +35,7 @@ export default function Application() {
   const [jobIndex, setJobIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(true);
+  const [showDescription, setShowDescription] = useState(false);
 
   const options = {
     method: "GET",
@@ -86,13 +88,11 @@ export default function Application() {
          const error = err as AxiosError;
          console.log(error)
          if (!error.response) {
-           // the error object does not contain a response when there is a network failure
            setError(
              "Network Error: Please check your internet connection and refresh."
            );
          }
-        setError(`There was an error: ${error.status} ${error.message}`);
-        //  throw new Error("Failed to fetch data");
+        setError(` ${error.status} ${error.message}. Dismiss to reload the app`);
        
         
       } finally {
@@ -114,27 +114,50 @@ export default function Application() {
     }));
   };
   return (
-    <main className="">
-      <div className=" w-[95%] sm:px-10  mx-auto ">
+    <main className=" mx-auto">
+      <div className="sm:px-10  w-fit ">
         <Logo />
       </div>
 
       {loading ? (
         <Loader />
       ) : (
-        <div className="py-10  w-[95%] sm:px-10  mx-auto ">
-          <JobSearch
+        <div className="md:py-10 py-3  sm:px-10  mx-auto ">
+          {!showDescription && <JobSearch
             handleInputChange={handleInputChange}
             searchDetails={searchDetails}
             setSearchParams={setSearchParams}
             searching={searching}
-          />
-          <main className=" flex  mt-10 gap-5">
+          />}
+
+          <main className=" hidden md:flex  mt-10 gap-5">
             <JobDetailsSection foundJobs={jobList} setJobIndex={setJobIndex} />
 
-            <section className="  w-[60%] relative overflow-y-auto h-[80vh] border-2 ">
+            <section className="  w-[65%] relative overflow-y-auto h-[90vh] rounded-lg border-2 ">
               <SummaryCard job={jobList[jobIndex]} />
             </section>
+          </main>
+          {/* mobile component */}
+          <main className=" md:hidden font-circular  mt-5 gap-5">
+            {showDescription && (
+              <button
+                className="py-1 my-3 flex items-center gap-2"
+                onClick={() => setShowDescription((prev) => !prev)}
+              >
+                <IoIosArrowBack /> Back to search
+              </button>
+            )}
+            {!showDescription ? (
+              <JobDetailsSection
+                foundJobs={jobList}
+                setJobIndex={setJobIndex}
+                setShowDescription={setShowDescription}
+              />
+            ) : (
+              <section className="  relative overflow-y-auto h-[80vh] border-2 ">
+                <SummaryCard job={jobList[jobIndex]} />
+              </section>
+            )}
           </main>
         </div>
       )}

@@ -35,7 +35,7 @@ export default function JobSearch({
   return (
     <form
       onSubmit={handleJobSearch}
-      className=" grid grid-cols-2 md:grid-cols-4 gap-2 font-circular lg:flex  bg-white p-2 w-[95%] shadow-lg rounded-lg"
+      className=" grid grid-cols-2 md:grid-cols-4 gap-2 font-circular lg:flex  bg-white p-2 shadow-lg rounded-lg"
     >
       <input
         placeholder="Job title"

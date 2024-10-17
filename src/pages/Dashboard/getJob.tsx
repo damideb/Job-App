@@ -53,7 +53,9 @@ export default function GetJob() {
           "Network Error: Please check your internet connection and refresh."
         );
       }
-      setError( `There was an error: ${error.message}`)
+      setError(
+        ` ${error.message}.Please, dismiss to reload the app`
+      );
       console.error(error);
     } finally {
       setLoadingJobs(false);

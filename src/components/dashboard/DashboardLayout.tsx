@@ -12,8 +12,8 @@ import useGlobalContext from "../../hooks/globalContext";
 export default function DashboardLayout() {
   const { dispatch, loading, setLoading } = useGlobalContext()
 
-  const {setError, error} = useError()
-  console.log(error, 'yy')
+  const {setError} = useError()
+
   useEffect(() => {
     const getUser = async function () {
       try {
@@ -34,7 +34,7 @@ export default function DashboardLayout() {
           );
         }
 
-        setError(`${error.message}. Pleaase, try again `);
+        setError(`${error.message}. Please, dismiss to reload the app `);
       } finally {
         setLoading(false);
       }

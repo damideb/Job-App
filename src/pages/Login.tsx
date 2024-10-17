@@ -6,6 +6,7 @@ import { AuthContext } from "../Context/context";
 import { AuthContextProvider } from "../types/types";
 import { toast } from "react-toastify";
 import { AxiosError } from "axios";
+import Logo from "../components/Logo";
 
 interface ErrorResponseData {
   msg: string;
@@ -73,9 +74,14 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col-reverse sm:flex-row justify-between">
-      <div className="px-5 bg-[#a8dadc49] py-10 sm:py-3 flex flex-col gap-5 sm:w-[35%] justify-center">
-        <h1 className="text-3xl font-openSans mb-10">Log in to your account</h1>
+    <div className="flex flex-col-reverse h-screen sm:flex-row justify-between">
+      <div className="px-5 bg-[#a8dadc49] py-5 h-[70%] sm:h-auto sm:py-3 flex flex-col gap-5 sm:w-[45%] md:w-[35%] justify-center">
+        <div className=" text-center w-fit mx-auto sm:my-5">
+          <Logo />
+        </div>
+        <h1 className=" text-xl md:text-3xl text-center  font-openSans mb-5 ">
+          Log in to your account
+        </h1>
         <form onSubmit={login} className="space-y-10 font-circular">
           <div className={`input-container flex flex-col gap-2`}>
             <input
@@ -127,7 +133,7 @@ export default function Login() {
       <img
         src={image}
         alt="illustration"
-        className="sm:h-full h-[200px]  object-cover sm:w-[65%]"
+        className="sm:h-full h-[200px]   object-cover sm:w-[55%] md:w-[65%]"
       />
     </div>
   );
