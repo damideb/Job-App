@@ -38,17 +38,17 @@ function Homepage() {
 
           <div className=" font-openSans flex gap-5 my-3 ">
             <button
-              className="   border-2 border-[#1D3557] w-[180px] py-3 text-xl  login-button "
+              className="   border-2 border-[#1D3557] w-[200px] py-3 text-xl  login-button "
               onClick={() => navigate("/apply")}
             >
               Apply
             </button>
-            <button
+        { !token &&   <button
               className=" border-2 border-[#1D3557]  w-[180px] py-3 text-xl getstarted-button"
               onClick={() => navigate("/login")}
             >
               Login
-            </button>
+            </button>}
           </div>
         </div>
 

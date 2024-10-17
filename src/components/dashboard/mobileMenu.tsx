@@ -20,7 +20,7 @@ export default function MobileMenu({ sideContent }: Props) {
     <div
       className={` ${
         showMenu ? " opacity-100 visible" : " opacity-0 invisible"
-      } transition-all duration-700  fixed w-[95%] py-5 z-50   rounded-lg h-[95vh] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] shadow-2xl drop-shadow-lg  bg-white md:hidden`}
+      } transition-all duration-700  fixed w-[95%] pt-10 z-50   rounded-lg h-[95vh] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] shadow-2xl drop-shadow-lg  bg-white md:hidden`}
     >
       <div className="">
         <button

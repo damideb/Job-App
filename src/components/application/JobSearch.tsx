@@ -68,7 +68,7 @@ export default function JobSearch({
       </select>
       <button
         disabled={searching}
-        className=" bg-blue lg:w-[10%] px-5 text-2xl grid place-content-center text-white rounded"
+        className=" bg-blue lg:w-[10%] px-5 py-2 text-2xl grid place-content-center text-white rounded"
       >
         <GoSearch />
       </button>

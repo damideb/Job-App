@@ -79,7 +79,7 @@ export default function Login() {
         <div className=" text-center w-fit mx-auto sm:my-5">
           <Logo />
         </div>
-        <h1 className=" text-xl md:text-3xl text-center  font-openSans mb-5 ">
+        <h1 className=" text-xl md:text-3xl text-center  font-openSans sm:mb-5 ">
           Log in to your account
         </h1>
         <form onSubmit={login} className="space-y-10 font-circular">
